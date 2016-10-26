@@ -21,7 +21,7 @@
                 // "--override",
                 // "{\"version\": \"0.0.1\"}"
             ],
-            "cwd": "C:\\dev\\MultiValueControlExtension\\dist",
+            "cwd": "${workspaceRoot}",
             "preLaunchTask": null,
             "runtimeExecutable": null,
             "runtimeArgs": [
@@ -50,7 +50,7 @@
                 "--override",
                 "{\"version\": \"0.0.1\"}"
             ],
-            "cwd": "C:\\vso\\src\\Vssf\\WebPlatform\\ExtensionPackages\\WebPlatform",
+            "cwd": "${workspaceRoot}",
             "preLaunchTask": null,
             "runtimeExecutable": null,
             "runtimeArgs": [
@@ -72,6 +72,28 @@
             "stopOnEntry": false,
             "args": [
                 
+            ],
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": null,
+            "runtimeExecutable": null,
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "env": {
+                "NODE_ENV": "development",
+                "TFX_TRACE": "1"
+            },
+            "console": "internalConsole",
+            "sourceMaps": true,
+            "outDir": "${workspaceRoot}/_build"
+        },
+        {
+            "name": "Command",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/app/app.ts",
+            "stopOnEntry": false,
+            "args": ["workitem", "query", "--project", "M1stHomeBanking", "--query", "SELECT * FROM WorkItemLinks WHERE ([Source].[System.TeamProject] = 'M1stHomeBanking' and [Source].[system.IterationPath] = @CurrentIteration AND [Source].[system.Id] = 10627 And ([System.Links.LinkType] = 'Parent')) mode(MustContain)" , "--auth-type",  "basic",  "--service-url", "http://tfs:8080/tfs/development", "--username", "minnera@members1st.org", "--password", "2468Amms$$"
             ],
             "cwd": "${workspaceRoot}",
             "preLaunchTask": null,
