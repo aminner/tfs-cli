@@ -25,13 +25,24 @@ export class WorkItemQuery extends witBase.WorkItemBase<witContracts.WorkItem[]>
 		return this.commandArgs.project.val(true).then((projectName) => {
 			return this.commandArgs.query.val().then((query) => {
 				let wiql: witContracts.Wiql = { query: query };
-				return witApi.queryByWiql(wiql, <coreContracts.TeamContext>{ project: projectName }).then((result) => {
-					let workItemIds = result.workItems.map(val => val.id).slice(0, Math.min(200, result.workItems.length));
-					let fieldRefs = result.columns.map(val => val.referenceName)
-                    
-                    fieldRefs = fieldRefs.slice(0, Math.min(20, result.columns.length));
-					return witApi.getWorkItems(workItemIds, fieldRefs);
-				});
+				if(wiql.query.toLowerCase().includes("workitemlinks"))
+				{
+					return witApi.queryByWiql(wiql, <coreContracts.TeamContext>{ project: projectName }).then((result) => {
+						let workItemIds = result.workItemRelations.map(val => val.target.id).slice(0, Math.min(200, result.workItemRelations.length));
+						let fieldRefs = result.columns.map(val => val.referenceName)
+						
+						fieldRefs = fieldRefs.slice(0, Math.min(20, result.columns.length));
+						return witApi.getWorkItems(workItemIds, fieldRefs);
+					});
+				} else {
+					return witApi.queryByWiql(wiql, <coreContracts.TeamContext>{ project: projectName }).then((result) => {
+						let workItemIds = result.workItems.map(val => val.id).slice(0, Math.min(200, result.workItems.length));
+						let fieldRefs = result.columns.map(val => val.referenceName)
+						
+						fieldRefs = fieldRefs.slice(0, Math.min(20, result.columns.length));
+						return witApi.getWorkItems(workItemIds, fieldRefs);
+					});
+				}
 			});
 		});
 
